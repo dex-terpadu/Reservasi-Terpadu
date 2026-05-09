@@ -1,0 +1,15 @@
+/*
+ * LabRoom — Admin Panel CSS
+ * Refactored into fragments for better maintainability.
+ */
+
+@import 'admin_parts/base.css';
+@import 'admin_parts/animations.css';
+@import 'admin_parts/login.css';
+@import 'admin_parts/layout.css';
+@import 'admin_parts/dashboard.css';
+@import 'admin_parts/reservations.css';
+@import 'admin_parts/rooms.css';
+@import 'admin_parts/modals.css';
+@import 'admin_parts/components.css';
+@import 'admin_parts/responsive.css';

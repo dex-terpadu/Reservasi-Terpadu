@@ -1,0 +1,277 @@
+/* parts/calendar.css */
+.tl-wrap {
+    margin-top: 14px;
+    display: none;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px
+}
+
+.tl-wrap.show {
+    display: block;
+    animation: fadeUp .25s ease
+}
+
+.tl-label {
+    font-size: 11.5px;
+    color: var(--text2);
+    margin-bottom: 8px;
+    font-weight: 600
+}
+
+.tl-bar {
+    position: relative;
+    height: 26px;
+    background: rgba(13, 34, 68, .08);
+    border-radius: 5px;
+    overflow: hidden
+}
+
+.tl-seg {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.5px;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 4px
+}
+
+.tl-seg.booked {
+    background: rgba(192, 57, 43, .25);
+    border: 1px solid rgba(192, 57, 43, .4);
+    color: var(--red)
+}
+
+.tl-seg.new-ok {
+    background: rgba(26, 127, 75, .25);
+    border: 1px solid rgba(26, 127, 75, .4);
+    color: var(--green)
+}
+
+.tl-seg.new-bad {
+    background: rgba(192, 57, 43, .45);
+    border: 1px solid var(--red);
+    color: #fff
+}
+
+.tl-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px
+}
+
+.tl-ticks span {
+    font-size: 9.5px;
+    color: var(--text3)
+}
+
+.tl-legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    flex-wrap: wrap
+}
+
+.tl-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text2)
+}
+
+.tl-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px
+}
+
+.user-cal-wrap {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.user-cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.user-cal-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #444;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.user-cal-btn:hover {
+    background: #e9ecef;
+}
+
+.ucal-hdr-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.ucal-hdr-btn.active {
+    color: #1a73e8;
+    background: #f0f7ff;
+}
+
+.user-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.ucal-head {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-align: center;
+    padding: 6px 0;
+    background: #fafafa;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    text-transform: uppercase;
+}
+
+.ucal-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+    background: #fff;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    transition: background 0.1s;
+}
+
+.ucal-day:hover:not(.ucal-disabled):not(.ucal-outside) {
+    background: #f8f9fa;
+    color: #1a73e8;
+}
+
+.ucal-outside {
+    background: #fcfcfc;
+    color: #ccc;
+    cursor: default;
+}
+
+.ucal-disabled {
+    background: #f5f5f5;
+    color: #ddd;
+    cursor: not-allowed;
+}
+
+.ucal-today {
+    background: #fffbe6 !important;
+}
+
+.ucal-today .ucal-day-num {
+    color: #d48806;
+    font-weight: 700;
+}
+
+.ucal-selected {
+    background: #1a73e8 !important;
+    color: #fff !important;
+    border-color: #1a73e8 !important;
+    z-index: 5;
+}
+
+.ucal-dot {
+    position: absolute;
+    bottom: 3px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #1a73e8;
+}
+
+.ucal-selected .ucal-dot {
+    background: #fff;
+}
+
+.ucal-has-booking:not(.ucal-selected):not(.ucal-today) {
+    background: #f0f7ff;
+}
+
+.ucal-month-cell {
+    aspect-ratio: 1.5 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.ucal-m-selected {
+    background: #1a73e8;
+    color: #fff;
+}
+
+/* More compact preview */
+.user-cal-preview {
+    margin-top: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.ucal-prev-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.ucal-prev-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11.5px;
+    border-bottom: 1px solid #eee;
+}
+
+.ucal-prev-item:last-child { border-bottom: none; }
+
+.ucal-prev-time { font-weight: 700; color: #333; min-width: 75px; }
+.ucal-prev-kep { flex: 1; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ucal-prev-status { font-size: 9px; font-weight: 800; }

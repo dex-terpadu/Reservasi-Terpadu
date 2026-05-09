@@ -1,0 +1,154 @@
+/* parts/modals.css */
+.ov {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(13,34,68,.6);
+    backdrop-filter:blur(6px);
+    z-index:300;
+    align-items:center;
+    justify-content:center;
+    padding:20px
+}
+
+.ov.show {
+    display:flex
+}
+
+.modal {
+    background:var(--white);
+    border:1px solid var(--border2);
+    border-radius:20px;
+    padding:28px;
+    width:100%;
+    max-width:460px;
+    animation:popIn .25s cubic-bezier(.34,1.56,.64,1);
+    max-height:90vh;
+    overflow-y:auto;
+    box-shadow:0 24px 80px rgba(13,34,68,.3)
+}
+
+.mhd {
+    margin-bottom:20px
+}
+
+.mttl {
+    font-family:var(--display);
+    font-size:20px;
+    color:var(--navy);
+    margin-bottom:4px
+}
+
+.msub {
+    font-size:12.5px;
+    color:var(--text3)
+}
+
+.mf {
+    margin-bottom:14px
+}
+
+.ml {
+    font-size:10.5px;
+    color:var(--text3);
+    font-weight:700;
+    margin-bottom:5px;
+    text-transform:uppercase;
+    letter-spacing:.06em
+}
+
+.mv {
+    background:var(--cream);
+    border:1px solid var(--border2);
+    border-radius:9px;
+    padding:10px 14px;
+    font-size:13.5px;
+    color:var(--text);
+    font-weight:500
+}
+
+.mwarn {
+    background:var(--amber-bg);
+    border:1px solid rgba(200,134,10,.3);
+    border-radius:9px;
+    padding:10px 14px;
+    font-size:12.5px;
+    color:var(--amber);
+    margin-top:6px;
+    display:none;
+    align-items:flex-start;
+    gap:8px
+}
+
+.mwarn.show {
+    display:flex
+}
+
+.mwarn svg {
+    width:14px;
+    height:14px;
+    flex-shrink:0;
+    margin-top:2px
+}
+
+.mac {
+    display:flex;
+    gap:8px;
+    margin-top:20px;
+    flex-wrap:wrap
+}
+
+.mb {
+    flex:1;
+    padding:12px;
+    border-radius:11px;
+    font-size:13.5px;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    font-family:var(--font);
+    transition:all .2s;
+    min-width:80px
+}
+
+.mb.apc {
+    background:linear-gradient(135deg,var(--green),#15693e);
+    color:#fff;
+    box-shadow:0 2px 10px rgba(26,127,75,.2)
+}
+
+.mb.apc:hover {
+    transform:translateY(-1px);
+    box-shadow:0 4px 16px rgba(26,127,75,.3)
+}
+
+.mb.rjc {
+    background:var(--red-bg);
+    color:var(--red);
+    border:1.5px solid rgba(192,57,43,.3)
+}
+
+.mb.rjc:hover {
+    background:var(--red);
+    color:#fff
+}
+
+.mb.cnc {
+    background:var(--cream);
+    color:var(--text2);
+    border:1.5px solid var(--border2)
+}
+
+.mb.cnc:hover {
+    background:var(--cream2)
+}
+
+.mb.svc {
+    background:linear-gradient(135deg,var(--navy),var(--navy3));
+    color:var(--gold3)
+}
+
+.mb.svc:hover {
+    transform:translateY(-1px);
+    box-shadow:0 4px 14px rgba(13,34,68,.25)
+}

@@ -1,0 +1,314 @@
+/* parts/layout.css */
+.inst-bar {
+    background: var(--navy2);
+    color: rgba(200, 168, 75, .8);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    padding: 6px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(200, 168, 75, .15);
+    position: relative;
+    z-index: 10;
+    animation: slideDown .5s ease forwards;
+}
+
+.inst-bar span {
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+
+.topbar {
+    background: var(--navy);
+    border-bottom: 3px solid var(--gold);
+    padding: 0 32px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(13, 34, 68, .4);
+    animation: fadeIn .5s ease .2s both;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none
+}
+
+.logo-emblem {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 2px rgba(200, 168, 75, .3), 0 2px 12px rgba(200, 168, 75, .25);
+    transition: transform .3s ease;
+}
+
+.logo:hover .logo-emblem {
+    transform: rotate(8deg) scale(1.05)
+}
+
+.logo-emblem svg {
+    width: 26px;
+    height: 26px
+}
+
+.logo-texts {
+    display: flex;
+    flex-direction: column
+}
+
+.logo-main {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: .02em;
+    line-height: 1.1
+}
+
+.logo-main span {
+    color: var(--gold)
+}
+
+.logo-sub {
+    font-size: 10.5px;
+    color: rgba(200, 168, 75, .7);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-top: 1px
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
+
+.nav-link {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, .65);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all .2s;
+    letter-spacing: .03em
+}
+
+.nav-link:hover {
+    color: var(--gold);
+    background: rgba(200, 168, 75, .08)
+}
+
+.btn-nav {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: var(--navy) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 10px rgba(200, 168, 75, .3);
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.btn-nav:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(200, 168, 75, .4);
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+    color: var(--navy) !important;
+}
+
+.topbar-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(200, 168, 75, .2)
+}
+
+.hero {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 60%, var(--slate) 100%);
+    padding: 52px 32px 44px;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: var(--cream);
+    clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 168, 75, .12) 0%, transparent 70%);
+}
+
+.hero-bg-circle:nth-child(1) {
+    width: 500px;
+    height: 500px;
+    top: -150px;
+    right: -100px;
+    animation: float1 8s ease-in-out infinite
+}
+
+.hero-bg-circle:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    left: 5%;
+    animation: float2 10s ease-in-out infinite
+}
+
+.hero-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 32px;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    opacity: .4;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto
+}
+
+
+
+
+
+.hero h1 {
+    font-family: var(--display);
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    animation: fadeUp .6s ease .4s both;
+}
+
+.hero h1 span {
+    color: var(--gold3)
+}
+
+.hero p {
+    font-size: 15px;
+    color: rgba(245, 240, 232, .75);
+    line-height: 1.7;
+    max-width: 540px;
+    animation: fadeUp .6s ease .45s both;
+}
+
+.hero-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    border-radius: 2px;
+    margin-top: 20px;
+    animation: fadeUp .6s ease .5s both;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 28px;
+    animation: fadeUp .6s ease .55s both;
+}
+
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}
+
+.hero-stat-num {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold3);
+    line-height: 1
+}
+
+.hero-stat-lbl {
+    font-size: 11px;
+    color: rgba(245, 240, 232, .5);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-top: 3px
+}
+
+.main-layout {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 24px;
+    padding: 32px 32px 60px;
+    max-width: 1160px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.footer {
+    position: relative;
+    z-index: 1;
+    background: var(--navy2);
+    border-top: 3px solid var(--gold);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-left {
+    font-size: 12px;
+    color: rgba(200, 168, 75, .5)
+}
+
+.footer-left strong {
+    color: rgba(200, 168, 75, .8);
+    font-weight: 600
+}
+
+.footer-right {
+    font-size: 12px;
+    color: rgba(200, 168, 75, .4);
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+
+.footer-right::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: .4
+}

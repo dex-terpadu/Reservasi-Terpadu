@@ -1,0 +1,300 @@
+/* parts/layout.css */
+#admin-page {
+    display:none;
+    flex-direction:column;
+    min-height:100vh;
+    position:relative;
+    z-index:1
+}
+
+#admin-page.active {
+    display:flex
+}
+
+.inst-bar {
+    background:var(--navy2);
+    color:rgba(200,168,75,.75);
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:.04em;
+    padding:6px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(200,168,75,.15);
+    flex-shrink:0;
+    animation:fadeIn .5s ease
+}
+
+
+
+.topbar {
+    background:var(--navy);
+    border-bottom:3px solid var(--gold);
+    padding:0 24px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 20px rgba(13,34,68,.4);
+    flex-shrink:0;
+    animation:fadeIn .4s ease
+}
+
+.logo {
+    display:flex;
+    align-items:center;
+    gap:12px
+}
+
+.lem2 {
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 0 2px rgba(200,168,75,.3);
+    transition:transform .3s;
+    cursor:pointer
+}
+
+.lem2:hover {
+    transform:rotate(8deg) scale(1.05)
+}
+
+.lem2 svg {
+    width:20px;
+    height:20px
+}
+
+.ltxts {
+    display:flex;
+    flex-direction:column
+}
+
+.lmain {
+    font-family:var(--display);
+    font-size:19px;
+    color:var(--white);
+    line-height:1.1
+}
+
+.lmain span {
+    color:var(--gold)
+}
+
+.abadge {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:2px 8px;
+    border-radius:5px;
+    background:rgba(200,168,75,.15);
+    border:1px solid rgba(200,168,75,.3);
+    font-size:10px;
+    font-weight:700;
+    color:var(--gold);
+    letter-spacing:.06em;
+    margin-top:2px;
+    width:fit-content;
+    text-transform:uppercase
+}
+
+.abadge svg {
+    width:9px;
+    height:9px
+}
+
+.tr {
+    display:flex;
+    align-items:center;
+    gap:10px
+}
+
+.uchip {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:5px 14px 5px 6px;
+    border-radius:20px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(200,168,75,.2)
+}
+
+.uav {
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+
+.uav svg {
+    width:13px;
+    height:13px;
+    color:var(--navy)
+}
+
+.uname {
+    font-size:12.5px;
+    font-weight:600;
+    color:rgba(245,240,232,.85)
+}
+
+.bsm {
+    padding:6px 14px;
+    border-radius:8px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid rgba(200,168,75,.2);
+    background:transparent;
+    color:rgba(245,240,232,.55);
+    font-family:var(--font);
+    transition:all .2s;
+    display:inline-flex;
+    align-items:center;
+    gap:5px
+}
+
+.bsm:hover {
+    background:rgba(255,255,255,.07);
+    color:var(--gold);
+    border-color:var(--gold)
+}
+
+.bsm svg {
+    width:13px;
+    height:13px
+}
+
+.bsm.danger:hover {
+    border-color:var(--red);
+    color:var(--red)
+}
+
+.abody {
+    display:flex;
+    flex:1;
+    overflow:hidden
+}
+
+.aside {
+    width:224px;
+    background:var(--navy2);
+    border-right:1px solid rgba(200,168,75,.12);
+    padding:18px 0;
+    flex-shrink:0;
+    overflow-y:auto;
+    height:calc(100vh - 107px);
+    position:sticky;
+    top:0
+}
+
+.asl {
+    margin-bottom:4px
+}
+
+.asll {
+    font-size:10px;
+    font-weight:700;
+    color:rgba(200,168,75,.45);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    padding:10px 18px 5px
+}
+
+.asi {
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px 18px;
+    font-size:12.5px;
+    color:rgba(245,240,232,.5);
+    cursor:pointer;
+    transition:all .15s;
+    border-left:3px solid transparent
+}
+
+.asi:hover {
+    background:rgba(200,168,75,.07);
+    color:rgba(245,240,232,.85)
+}
+
+.asi.active {
+    background:rgba(200,168,75,.1);
+    color:var(--gold3);
+    border-left-color:var(--gold)
+}
+
+.asi svg {
+    width:14px;
+    height:14px;
+    flex-shrink:0
+}
+
+.ab {
+    margin-left:auto;
+    padding:2px 7px;
+    border-radius:10px;
+    font-size:10.5px;
+    font-weight:700
+}
+
+.ab.gold {
+    background:rgba(200,168,75,.2);
+    color:var(--gold3)
+}
+
+.ab.red {
+    background:var(--red);
+    color:#fff;
+    animation:pulse 2s infinite
+}
+
+.ab.green {
+    background:var(--green);
+    color:#fff
+}
+
+.ab.dim {
+    background:rgba(200,168,75,.1);
+    color:rgba(200,168,75,.5)
+}
+
+.adiv {
+    height: 1px;
+    background: rgba(200, 168, 75, .1);
+    margin: 6px 14px;
+}
+
+.aside-edit-btn {
+    background: transparent;
+    border: none;
+    color: rgba(245, 240, 232, 0.3);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.asi:hover .aside-edit-btn {
+    opacity: 1;
+}
+
+.aside-edit-btn:hover {
+    color: var(--gold);
+    background: rgba(200, 168, 75, 0.15);
+}

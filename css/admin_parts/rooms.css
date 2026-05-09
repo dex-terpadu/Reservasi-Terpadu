@@ -1,0 +1,245 @@
+/* parts/rooms.css */
+.rsc {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:var(--shadow);
+    transition:all .2s
+}
+
+.rsc:hover {
+    border-color:var(--border2);
+    transform:translateY(-2px);
+    box-shadow:var(--shadow2)
+}
+
+.rsn {
+    font-size:14px;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:3px
+}
+
+.rsd {
+    font-size:12px;
+    color:var(--text3)
+}
+
+.rstag {
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:4px 11px;
+    border-radius:7px;
+    font-size:11.5px;
+    font-weight:600
+}
+
+.rstag.available {
+    background:var(--green-bg);
+    color:var(--green);
+    border:1px solid rgba(26,127,75,.2)
+}
+
+.rstag.maintenance {
+    background:var(--amber-bg);
+    color:var(--amber);
+    border:1px solid rgba(200,134,10,.2)
+}
+
+.rstag.closed {
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid rgba(192,57,43,.2)
+}
+
+.ber {
+    padding:6px 13px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    border:1.5px solid var(--border2);
+    background:var(--cream);
+    color:var(--text2);
+    font-family:var(--font);
+    transition:all .15s
+}
+
+.ber:hover {
+    background:var(--navy);
+    border-color:var(--navy);
+    color:var(--gold3)
+}
+
+.rcd {
+    border-radius:7px;
+    padding:5px 3px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .15s;
+    min-height:42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px
+}
+
+.rcd:hover {
+    background:var(--cream2)
+}
+
+.rcd.today {
+    border:1.5px solid var(--navy);
+    background:rgba(13,34,68,.04)
+}
+
+.rcd.hasbk {
+    background:rgba(200,168,75,.1)
+}
+
+.rcd.sel {
+    background:var(--navy);
+    border:1.5px solid var(--navy)
+}
+
+.rcd.sel .rcdn {
+    color:var(--gold3)!important
+}
+
+.rcd.empty {
+    cursor:default;
+    pointer-events:none
+}
+
+.rcdn {
+    font-size:12px;
+    font-weight:600;
+    color:var(--text2)
+}
+
+.rcd.today .rcdn {
+    color:var(--navy)
+}
+
+.rcd.hasbk .rcdn {
+    color:var(--gold2)
+}
+
+.drow {
+    display:flex;
+    gap:2px;
+    flex-wrap:wrap;
+    justify-content:center
+}
+
+.dd {
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--gold)
+}
+
+.rch {
+    font-size:9.5px;
+    font-weight:700;
+    color:var(--text3);
+    text-align:center;
+    padding:3px 0;
+    text-transform:uppercase;
+    letter-spacing:.05em
+}
+
+.rci {
+    background:var(--cream);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 14px;
+    margin-bottom:7px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:all .15s
+}
+
+.rci:hover {
+    border-color:var(--border2);
+    background:var(--white)
+}
+
+.rcii {
+    font-size:12.5px;
+    color:var(--text)
+}
+
+.rcit {
+    font-size:11.5px;
+    color:var(--text3);
+    margin-top:3px
+}
+
+.rcia {
+    display:flex;
+    gap:5px;
+    flex-shrink:0
+}
+
+.rcb {
+    padding:5px 10px;
+    border-radius:7px;
+    font-size:11.5px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+    font-family:var(--font);
+    transition:all .15s
+}
+
+.rcb.ed {
+    background:var(--gold-bg);
+    color:var(--gold2);
+    border:1px solid var(--border)
+}
+
+.rcb.ed:hover {
+    background:var(--navy);
+    color:var(--gold3)
+}
+
+.rcb.dl {
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid rgba(192,57,43,.2)
+}
+
+.rcb.dl:hover {
+    background:var(--red);
+    color:#fff
+}
+
+.tsm {
+    font-size:10px;
+    padding:2px 7px;
+    border-radius:5px;
+    font-weight:700
+}
+
+.tsm.approved {
+    background:var(--green-bg);
+    color:var(--green)
+}
+
+.tsm.pending {
+    background:var(--amber-bg);
+    color:var(--amber)
+}
+
+.tsm.rejected {
+    background:var(--red-bg);
+    color:var(--red)
+}

@@ -1,0 +1,264 @@
+/* parts/reservations.css */
+.fbar {
+    display:flex;
+    gap:7px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    align-items:center
+}
+
+.fb {
+    padding:7px 14px;
+    border-radius:8px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    border:1.5px solid var(--border2);
+    background:var(--white);
+    color:var(--text2);
+    font-family:var(--font);
+    transition:all .15s;
+    display:inline-flex;
+    align-items:center;
+    gap:5px
+}
+
+.fb:hover {
+    border-color:var(--gold);
+    color:var(--gold2);
+    background:var(--gold-bg)
+}
+
+.fb.active {
+    background:var(--navy);
+    border-color:var(--navy);
+    color:var(--gold3)
+}
+
+.fb.active-amber {
+    background:var(--amber-bg);
+    color:var(--amber);
+    border-color:rgba(200,134,10,.4)
+}
+
+.fb.active-green {
+    background:var(--green-bg);
+    color:var(--green);
+    border-color:rgba(26,127,75,.4)
+}
+
+.fb.active-red {
+    background:var(--red-bg);
+    color:var(--red);
+    border-color:rgba(192,57,43,.4)
+}
+
+.fc {
+    padding:1px 6px;
+    border-radius:7px;
+    font-size:10.5px;
+    font-weight:700;
+    background:rgba(13,34,68,.07)
+}
+
+.fb.active .fc {
+    background:rgba(200,168,75,.2);
+    color:var(--gold3)
+}
+
+.fsc {
+    flex:1;
+    max-width:260px;
+    background:var(--white);
+    border:1.5px solid var(--border2);
+    border-radius:9px;
+    padding:8px 14px;
+    font-size:13px;
+    font-family:var(--font);
+    color:var(--text);
+    outline:none;
+    transition:all .2s
+}
+
+.fsc:focus {
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,168,75,.1)
+}
+
+.fsc::placeholder {
+    color:var(--text3)
+}
+
+.btbl {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow)
+}
+
+.thd {
+    display:grid;
+    grid-template-columns:1.3fr 1fr .9fr 1.1fr .8fr 160px;
+    padding:11px 20px;
+    background:linear-gradient(135deg,var(--navy),var(--navy3));
+    border-bottom:2px solid var(--gold);
+    font-size:10.5px;
+    font-weight:700;
+    color:rgba(200,168,75,.65);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    gap:10px;
+    align-items:center
+}
+
+.brow {
+    display:grid;
+    grid-template-columns:1.3fr 1fr .9fr 1.1fr .8fr 160px;
+    padding:14px 20px;
+    gap:10px;
+    border-bottom:1px solid var(--cream2);
+    align-items:center;
+    transition:background .15s;
+    animation:fadeUp .25s ease
+}
+
+.brow:last-child {
+    border-bottom:none
+}
+
+.brow:hover {
+    background:rgba(200,168,75,.04)
+}
+
+.c {
+    font-size:13px;
+    color:var(--text)
+}
+
+.cs {
+    font-size:11px;
+    color:var(--text3);
+    margin-top:2px
+}
+
+.cn {
+    font-weight:700;
+    color:var(--navy)
+}
+
+.tag {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:3px 10px;
+    border-radius:6px;
+    font-size:11.5px;
+    font-weight:600
+}
+
+.tag.pending {
+    background:var(--amber-bg);
+    color:var(--amber);
+    border:1px solid rgba(200,134,10,.2)
+}
+
+.tag.approved {
+    background:var(--green-bg);
+    color:var(--green);
+    border:1px solid rgba(26,127,75,.2)
+}
+
+.tag.rejected {
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid rgba(192,57,43,.2)
+}
+
+.tdot {
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:currentColor
+}
+
+.cbg {
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
+    padding:1px 6px;
+    border-radius:5px;
+    font-size:10px;
+    font-weight:700;
+    background:var(--amber-bg);
+    color:var(--amber);
+    border:1px solid rgba(200,134,10,.2);
+    margin-left:6px;
+    vertical-align:middle
+}
+
+.acts {
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap
+}
+
+.ab2 {
+    padding:5px 11px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+    font-family:var(--font);
+    transition:all .15s;
+    white-space:nowrap
+}
+
+.ab2.ap {
+    background:var(--green-bg);
+    color:var(--green);
+    border:1px solid rgba(26,127,75,.2)
+}
+
+.ab2.ap:hover {
+    background:var(--green);
+    color:#fff
+}
+
+.ab2.ar {
+    background:var(--red-bg);
+    color:var(--red);
+    border:1px solid rgba(192,57,43,.2)
+}
+
+.ab2.ar:hover {
+    background:var(--red);
+    color:#fff
+}
+
+.ab2.vw {
+    background:var(--gold-bg);
+    color:var(--gold2);
+    border:1px solid var(--border2)
+}
+
+.ab2.vw:hover {
+    background:var(--navy);
+    color:var(--gold3);
+    border-color:var(--navy)
+}
+
+.es {
+    padding:52px;
+    text-align:center;
+    color:var(--text3)
+}
+
+.es svg {
+    width:44px;
+    height:44px;
+    margin:0 auto 14px;
+    display:block;
+    color:var(--cream2)
+}

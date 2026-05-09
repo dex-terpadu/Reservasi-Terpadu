@@ -1,0 +1,18 @@
+/* parts/responsive.css */
+@media(max-width:900px) {
+    .aside {
+        display:none
+    }
+
+    .stats {
+        grid-template-columns:repeat(2,1fr)
+    }
+
+    .thd,.brow {
+        grid-template-columns:1.2fr 1fr .8fr 130px
+    }
+
+    .col-inst {
+        display:none
+    }
+}

@@ -1,0 +1,14 @@
+/*
+ * LabRoom — Sistem Informasi Pemesanan Ruangan
+ * Refactored into fragments for better maintainability.
+ */
+
+@import 'user_parts/base.css';
+@import 'user_parts/animations.css';
+@import 'user_parts/layout.css';
+@import 'user_parts/sidebar.css';
+@import 'user_parts/chatbot.css';
+@import 'user_parts/form_elements.css';
+@import 'user_parts/calendar.css';
+@import 'user_parts/overlays.css';
+@import 'user_parts/responsive.css';

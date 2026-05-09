@@ -1,0 +1,175 @@
+/* parts/chatbot.css */
+.main-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.form-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow2);
+    overflow: hidden;
+    animation: fadeUp .6s ease .5s both;
+}
+
+.form-panel-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+    padding: 20px 28px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fph-left {
+    display: flex;
+    align-items: center;
+    gap: 14px
+}
+
+.fph-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(200, 168, 75, .15);
+    border: 1px solid rgba(200, 168, 75, .3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fph-icon svg {
+    width: 22px;
+    height: 22px;
+    color: var(--gold3)
+}
+
+.fph-title {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--white);
+    line-height: 1.2
+}
+
+.fph-sub {
+    font-size: 12px;
+    color: rgba(200, 168, 75, .6);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.fph-sdot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: blink 2s infinite
+}
+
+.fph-step-indicator {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(200, 168, 75, .2);
+    border: 1px solid rgba(200, 168, 75, .3);
+    transition: all .3s
+}
+
+.step-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(200, 168, 75, .4)
+}
+
+.step-dot.done {
+    background: var(--green);
+    border-color: var(--green)
+}
+
+.bot-messages {
+    padding: 20px 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.msg {
+    display: flex;
+    gap: 10px;
+    animation: fadeUp .3s ease
+}
+
+.msg.bot {
+    align-self: flex-start;
+    max-width: 90%
+}
+
+.bot-av {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--navy), var(--navy3));
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.bot-av svg {
+    width: 17px;
+    height: 17px;
+    color: var(--gold)
+}
+
+.bbl {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 11px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 3px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+}
+
+.typing-bbl {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border-top-left-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tdot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold2);
+    animation: bounce .9s infinite
+}
+
+.tdot:nth-child(2) {
+    animation-delay: .15s
+}
+
+.tdot:nth-child(3) {
+    animation-delay: .3s
+}
