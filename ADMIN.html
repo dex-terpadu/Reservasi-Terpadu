@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LabRoom — Admin Panel | Universitas Tanjungpura</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D2244;--navy2:#0A1C38;--navy3:#122A50;
+  --gold:#C8A84B;--gold2:#A8883A;--gold3:#E0C070;
+  --gold-bg:rgba(200,168,75,.10);
+  --cream:#F5F0E8;--cream2:#EDE7D5;--white:#FFFFFF;
+  --border:rgba(200,168,75,.20);--border2:rgba(200,168,75,.35);
+  --text:#1A2540;--text2:#4A5878;--text3:#8896B0;
+  --green:#1A7F4B;--green-bg:rgba(26,127,75,.10);
+  --red:#C0392B;--red-bg:rgba(192,57,43,.10);
+  --amber:#C8860A;--amber-bg:rgba(200,134,10,.10);
+  --card:#FFFFFF;
+  --font:'Source Sans 3',sans-serif;--display:'Playfair Display',serif;
+  --shadow:0 4px 24px rgba(13,34,68,.10);--shadow2:0 8px 40px rgba(13,34,68,.15);
+}
+html,body{height:100%;font-family:var(--font);color:var(--text);overflow-x:hidden}
+body{background:var(--cream)}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 25%,rgba(200,168,75,.04) 0%,transparent 50%),radial-gradient(circle at 85% 75%,rgba(13,34,68,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,.4)}50%{box-shadow:0 0 0 6px rgba(192,57,43,0)}}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,18px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(18px,-20px)}}
+/* LOGIN */
+#login-page{display:flex;min-height:100vh;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 60%,#1A3260 100%)}
+#login-page.hidden{display:none!important}
+.lbg{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(200,168,75,.10) 0%,transparent 70%)}
+.lbg:nth-child(1){width:600px;height:600px;top:-150px;right:-150px;animation:float1 9s ease-in-out infinite}
+.lbg:nth-child(2){width:400px;height:400px;bottom:-100px;left:-80px;animation:float2 11s ease-in-out infinite}
+.lgrid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(200,168,75,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,.05) 1px,transparent 1px);background-size:50px 50px}
+.lbox{position:relative;z-index:10;width:100%;max-width:420px;padding:0 20px;animation:fadeUp .6s ease both}
+.lcard{background:rgba(255,255,255,.97);border:1px solid var(--border2);border-radius:24px;padding:40px 36px;box-shadow:0 32px 100px rgba(13,34,68,.4)}
+.luniv{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:20px;background:var(--gold-bg);border:1px solid var(--border2);font-size:11.5px;font-weight:600;color:var(--gold2);margin-bottom:22px}
+.luniv svg{width:13px;height:13px}
+.llogo{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.lem{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(13,34,68,.2)}
+.lem svg{width:24px;height:24px;color:var(--gold3)}
+.ltxt{font-family:var(--display);font-size:26px;color:var(--navy)}
+.ltxt span{color:var(--gold2)}
+.lsub{font-size:13px;color:var(--text2);margin-bottom:4px}
+.ldiv{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:20px 0;width:50px;border-radius:1px}
+.llbl{font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;display:block;letter-spacing:.03em;text-transform:uppercase}
+.lf{margin-bottom:16px}
+.lfw{position:relative}
+.linp{width:100%;background:var(--cream);border:1.5px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:14px;font-family:var(--font);color:var(--text);outline:none;transition:all .2s}
+.linp:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(200,168,75,.12)}
+.linp::placeholder{color:var(--text3)}
+.linp.err{border-color:var(--red);background:#fff8f7}
+.tpw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);padding:4px;transition:color .2s}
+.tpw:hover{color:var(--gold2)}
+.tpw svg{width:16px;height:16px;display:block}
+.lerr{font-size:12.5px;color:var(--red);background:var(--red-bg);border:1px solid rgba(192,57,43,.25);border-radius:9px;padding:9px 13px;margin-bottom:14px;display:none;align-items:center;gap:8px}
+.lerr.show{display:flex}
+.lerr svg{width:14px;height:14px;flex-shrink:0}
+.lbtn{width:100%;padding:14px;border-radius:11px;margin-top:4px;background:linear-gradient(135deg,var(--navy),var(--navy3));border:none;color:var(--gold3);font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 16px rgba(13,34,68,.25);letter-spacing:.03em}
+.lbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,34,68,.35)}
+.lbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.lbtn svg{width:16px;height:16px}
+.lhint{margin-top:22px;padding:15px 16px;background:var(--navy2);border:1px solid var(--border2);border-radius:12px}
+.lhttl{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:9px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.07em}
+.lhttl svg{width:12px;height:12px}
+.lhrow{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(245,240,232,.55);padding:3px 0}
+.lhval{color:var(--gold3);font-family:monospace;background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.2);padding:2px 8px;border-radius:5px;font-size:11.5px}
+/* ADMIN */
+#admin-page{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1}
+#admin-page.active{display:flex}
+.inst-bar{background:var(--navy2);color:rgba(200,168,75,.75);font-size:11.5px;font-weight:500;letter-spacing:.04em;padding:6px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,168,75,.15);flex-shrink:0;animation:fadeIn .5s ease}
+.idot{width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block;animation:blink 2.5s infinite;margin-right:4px}
+.topbar{background:var(--navy);border-bottom:3px solid var(--gold);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(13,34,68,.4);flex-shrink:0;animation:fadeIn .4s ease}
+.logo{display:flex;align-items:center;gap:12px}
+.lem2{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px rgba(200,168,75,.3);transition:transform .3s;cursor:pointer}
+.lem2:hover{transform:rotate(8deg) scale(1.05)}
+.lem2 svg{width:20px;height:20px}
+.ltxts{display:flex;flex-direction:column}
+.lmain{font-family:var(--display);font-size:19px;color:var(--white);line-height:1.1}
+.lmain span{color:var(--gold)}
+.abadge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:5px;background:rgba(200,168,75,.15);border:1px solid rgba(200,168,75,.3);font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-top:2px;width:fit-content;text-transform:uppercase}
+.abadge svg{width:9px;height:9px}
+.tr{display:flex;align-items:center;gap:10px}
+.uchip{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(200,168,75,.2)}
+.uav{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center}
+.uav svg{width:13px;height:13px;color:var(--navy)}
+.uname{font-size:12.5px;font-weight:600;color:rgba(245,240,232,.85)}
+.bsm{padding:6px 14px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid rgba(200,168,75,.2);background:transparent;color:rgba(245,240,232,.55);font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.bsm:hover{background:rgba(255,255,255,.07);color:var(--gold);border-color:var(--gold)}
+.bsm svg{width:13px;height:13px}
+.bsm.danger:hover{border-color:var(--red);color:var(--red)}
+.abody{display:flex;flex:1;overflow:hidden}
+.aside{width:224px;background:var(--navy2);border-right:1px solid rgba(200,168,75,.12);padding:18px 0;flex-shrink:0;overflow-y:auto;height:calc(100vh - 107px);position:sticky;top:0}
+.aside::-webkit-scrollbar{width:3px}
+.aside::-webkit-scrollbar-thumb{background:rgba(200,168,75,.2);border-radius:2px}
+.asl{margin-bottom:4px}
+.asll{font-size:10px;font-weight:700;color:rgba(200,168,75,.45);text-transform:uppercase;letter-spacing:.12em;padding:10px 18px 5px}
+.asi{display:flex;align-items:center;gap:9px;padding:9px 18px;font-size:12.5px;color:rgba(245,240,232,.5);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+.asi:hover{background:rgba(200,168,75,.07);color:rgba(245,240,232,.85)}
+.asi.active{background:rgba(200,168,75,.1);color:var(--gold3);border-left-color:var(--gold)}
+.asi svg{width:14px;height:14px;flex-shrink:0}
+.ab{margin-left:auto;padding:2px 7px;border-radius:10px;font-size:10.5px;font-weight:700}
+.ab.gold{background:rgba(200,168,75,.2);color:var(--gold3)}
+.ab.red{background:var(--red);color:#fff;animation:pulse 2s infinite}
+.ab.green{background:var(--green);color:#fff}
+.ab.dim{background:rgba(200,168,75,.1);color:rgba(200,168,75,.5)}
+.adiv{height:1px;background:rgba(200,168,75,.1);margin:6px 14px}
+.main{flex:1;padding:26px 28px;overflow-y:auto;height:calc(100vh - 107px)}
+.main::-webkit-scrollbar{width:5px}
+.main::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.psec{display:none}
+.psec.active{display:block;animation:fadeUp .3s ease}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--cream2)}
+.pt{font-family:var(--display);font-size:24px;color:var(--navy)}
+.ps{font-size:13px;color:var(--text3);margin-top:3px}
+.phact{display:flex;gap:8px}
+.bprim{padding:9px 20px;border-radius:9px;background:linear-gradient(135deg,var(--navy),var(--navy3));border:none;color:var(--gold3);font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 10px rgba(13,34,68,.2)}
+.bprim:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(13,34,68,.3)}
+.bprim svg{width:14px;height:14px}
+.bsec{padding:8px 16px;border-radius:9px;background:var(--white);border:1.5px solid var(--border2);color:var(--text2);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.bsec:hover{border-color:var(--gold);color:var(--gold2);background:var(--gold-bg)}
+.bsec svg{width:13px;height:13px}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sa,var(--gold));opacity:.5}
+.stat:nth-child(1){animation:fadeUp .35s .05s both}
+.stat:nth-child(2){animation:fadeUp .35s .10s both}
+.stat:nth-child(3){animation:fadeUp .35s .15s both}
+.stat:nth-child(4){animation:fadeUp .35s .20s both}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:var(--border2)}
+.slbl{font-size:11px;color:var(--text3);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.07em}
+.sval{font-size:34px;font-weight:700;color:var(--navy);line-height:1;font-family:var(--display)}
+.sval.amber{color:var(--amber);--sa:var(--amber)}
+.sval.green{color:var(--green);--sa:var(--green)}
+.sval.red{color:var(--red);--sa:var(--red)}
+.ssub{font-size:11.5px;color:var(--text3);margin-top:5px}
+.sico{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--sib,var(--gold-bg))}
+.sico svg{width:20px;height:20px}
+/* SECTION TITLE */
+.stitle{font-size:11.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.stitle-l{display:flex;align-items:center;gap:8px}
+.stitle-l::before{content:'';display:inline-block;width:3px;height:14px;background:var(--gold);border-radius:2px}
+/* FILTER */
+.fbar{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.fb{padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:var(--font);transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.fb:hover{border-color:var(--gold);color:var(--gold2);background:var(--gold-bg)}
+.fb.active{background:var(--navy);border-color:var(--navy);color:var(--gold3)}
+.fb.active-amber{background:var(--amber-bg);color:var(--amber);border-color:rgba(200,134,10,.4)}
+.fb.active-green{background:var(--green-bg);color:var(--green);border-color:rgba(26,127,75,.4)}
+.fb.active-red{background:var(--red-bg);color:var(--red);border-color:rgba(192,57,43,.4)}
+.fc{padding:1px 6px;border-radius:7px;font-size:10.5px;font-weight:700;background:rgba(13,34,68,.07)}
+.fb.active .fc{background:rgba(200,168,75,.2);color:var(--gold3)}
+.fsc{flex:1;max-width:260px;background:var(--white);border:1.5px solid var(--border2);border-radius:9px;padding:8px 14px;font-size:13px;font-family:var(--font);color:var(--text);outline:none;transition:all .2s}
+.fsc:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,168,75,.1)}
+.fsc::placeholder{color:var(--text3)}
+/* TABLE */
+.btbl{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.thd{display:grid;grid-template-columns:1.3fr 1fr .9fr 1.1fr .8fr 160px;padding:11px 20px;background:linear-gradient(135deg,var(--navy),var(--navy3));border-bottom:2px solid var(--gold);font-size:10.5px;font-weight:700;color:rgba(200,168,75,.65);text-transform:uppercase;letter-spacing:.08em;gap:10px;align-items:center}
+.brow{display:grid;grid-template-columns:1.3fr 1fr .9fr 1.1fr .8fr 160px;padding:14px 20px;gap:10px;border-bottom:1px solid var(--cream2);align-items:center;transition:background .15s;animation:fadeUp .25s ease}
+.brow:last-child{border-bottom:none}
+.brow:hover{background:rgba(200,168,75,.04)}
+.c{font-size:13px;color:var(--text)}
+.cs{font-size:11px;color:var(--text3);margin-top:2px}
+.cn{font-weight:700;color:var(--navy)}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.tag.pending{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(200,134,10,.2)}
+.tag.approved{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.tag.rejected{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.tdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.cbg{display:inline-flex;align-items:center;gap:3px;padding:1px 6px;border-radius:5px;font-size:10px;font-weight:700;background:var(--amber-bg);color:var(--amber);border:1px solid rgba(200,134,10,.2);margin-left:6px;vertical-align:middle}
+.acts{display:flex;gap:5px;flex-wrap:wrap}
+.ab2{padding:5px 11px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:all .15s;white-space:nowrap}
+.ab2.ap{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,127,75,.2)}.ab2.ap:hover{background:var(--green);color:#fff}
+.ab2.ar{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}.ab2.ar:hover{background:var(--red);color:#fff}
+.ab2.vw{background:var(--gold-bg);color:var(--gold2);border:1px solid var(--border2)}.ab2.vw:hover{background:var(--navy);color:var(--gold3);border-color:var(--navy)}
+.es{padding:52px;text-align:center;color:var(--text3)}
+.es svg{width:44px;height:44px;margin:0 auto 14px;display:block;color:var(--cream2)}
+/* ROOM PANEL */
+.rsc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow);transition:all .2s}
+.rsc:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow2)}
+.rsn{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.rsd{font-size:12px;color:var(--text3)}
+.rstag{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:7px;font-size:11.5px;font-weight:600}
+.rstag.available{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.rstag.maintenance{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(200,134,10,.2)}
+.rstag.closed{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.ber{padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--cream);color:var(--text2);font-family:var(--font);transition:all .15s}
+.ber:hover{background:var(--navy);border-color:var(--navy);color:var(--gold3)}
+/* ROOM CAL */
+.rcd{border-radius:7px;padding:5px 3px;text-align:center;cursor:pointer;transition:all .15s;min-height:42px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.rcd:hover{background:var(--cream2)}
+.rcd.today{border:1.5px solid var(--navy);background:rgba(13,34,68,.04)}
+.rcd.hasbk{background:rgba(200,168,75,.1)}
+.rcd.sel{background:var(--navy);border:1.5px solid var(--navy)}
+.rcd.sel .rcdn{color:var(--gold3)!important}
+.rcd.empty{cursor:default;pointer-events:none}
+.rcdn{font-size:12px;font-weight:600;color:var(--text2)}
+.rcd.today .rcdn{color:var(--navy)}
+.rcd.hasbk .rcdn{color:var(--gold2)}
+.drow{display:flex;gap:2px;flex-wrap:wrap;justify-content:center}
+.dd{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.rch{font-size:9.5px;font-weight:700;color:var(--text3);text-align:center;padding:3px 0;text-transform:uppercase;letter-spacing:.05em}
+.rci{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;transition:all .15s}
+.rci:hover{border-color:var(--border2);background:var(--white)}
+.rcii{font-size:12.5px;color:var(--text)}
+.rcit{font-size:11.5px;color:var(--text3);margin-top:3px}
+.rcia{display:flex;gap:5px;flex-shrink:0}
+.rcb{padding:5px 10px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:all .15s}
+.rcb.ed{background:var(--gold-bg);color:var(--gold2);border:1px solid var(--border)}.rcb.ed:hover{background:var(--navy);color:var(--gold3)}
+.rcb.dl{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}.rcb.dl:hover{background:var(--red);color:#fff}
+.tsm{font-size:10px;padding:2px 7px;border-radius:5px;font-weight:700}
+.tsm.approved{background:var(--green-bg);color:var(--green)}
+.tsm.pending{background:var(--amber-bg);color:var(--amber)}
+.tsm.rejected{background:var(--red-bg);color:var(--red)}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(13,34,68,.6);backdrop-filter:blur(6px);z-index:300;align-items:center;justify-content:center;padding:20px}
+.ov.show{display:flex}
+.modal{background:var(--white);border:1px solid var(--border2);border-radius:20px;padding:28px;width:100%;max-width:460px;animation:popIn .25s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(13,34,68,.3)}
+.mhd{margin-bottom:20px}
+.mttl{font-family:var(--display);font-size:20px;color:var(--navy);margin-bottom:4px}
+.msub{font-size:12.5px;color:var(--text3)}
+.mf{margin-bottom:14px}
+.ml{font-size:10.5px;color:var(--text3);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.mv{background:var(--cream);border:1px solid var(--border2);border-radius:9px;padding:10px 14px;font-size:13.5px;color:var(--text);font-weight:500}
+.mwarn{background:var(--amber-bg);border:1px solid rgba(200,134,10,.3);border-radius:9px;padding:10px 14px;font-size:12.5px;color:var(--amber);margin-top:6px;display:none;align-items:flex-start;gap:8px}
+.mwarn.show{display:flex}
+.mwarn svg{width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.mac{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.mb{flex:1;padding:12px;border-radius:11px;font-size:13.5px;font-weight:700;cursor:pointer;border:none;font-family:var(--font);transition:all .2s;min-width:80px}
+.mb.apc{background:linear-gradient(135deg,var(--green),#15693e);color:#fff;box-shadow:0 2px 10px rgba(26,127,75,.2)}.mb.apc:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,127,75,.3)}
+.mb.rjc{background:var(--red-bg);color:var(--red);border:1.5px solid rgba(192,57,43,.3)}.mb.rjc:hover{background:var(--red);color:#fff}
+.mb.cnc{background:var(--cream);color:var(--text2);border:1.5px solid var(--border2)}.mb.cnc:hover{background:var(--cream2)}
+.mb.svc{background:linear-gradient(135deg,var(--navy),var(--navy3));color:var(--gold3)}.mb.svc:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(13,34,68,.25)}
+.mtl{margin:14px 0}
+.mtll{font-size:11.5px;color:var(--text3);margin-bottom:7px;font-weight:600}
+.mtlb{position:relative;height:24px;background:var(--cream);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.mtls{position:absolute;top:3px;bottom:3px;border-radius:4px;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;overflow:hidden;white-space:nowrap}
+.mtls.bkd{background:rgba(192,57,43,.25);border:1px solid rgba(192,57,43,.4);color:var(--red)}
+.mtls.cur{background:rgba(200,134,10,.25);border:1px solid rgba(200,134,10,.45);color:var(--amber)}
+.mtlt{display:flex;justify-content:space-between;margin-top:4px}
+.mtlt span{font-size:9.5px;color:var(--text3)}
+.fci{background:var(--cream);border:1.5px solid var(--border2);border-radius:9px;padding:10px 14px;font-size:13.5px;font-family:var(--font);color:var(--text);outline:none;transition:all .2s;width:100%}
+.fci:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(200,168,75,.1)}
+.stp{padding:8px 16px;border-radius:9px;font-size:12.5px;font-weight:600;cursor:pointer;border:2px solid transparent;font-family:var(--font);transition:all .15s;background:var(--cream);color:var(--text2)}
+.stp.available.active{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.stp.maintenance.active{background:var(--amber-bg);border-color:var(--amber);color:var(--amber)}
+.stp.closed.active{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;z-index:500;padding:13px 20px;border-radius:12px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 32px rgba(13,34,68,.2);border:1px solid}
+.toast.success{background:#f0faf5;color:var(--green);border-color:rgba(26,127,75,.25)}
+.toast.error{background:#fdf0ee;color:var(--red);border-color:rgba(192,57,43,.25)}
+.toast.warn{background:#fdf8ee;color:var(--amber);border-color:rgba(200,134,10,.25)}
+.toast svg{width:16px;height:16px;flex-shrink:0}
+/* FOOTER */
+.afoot{background:var(--navy2);border-top:2px solid var(--gold);padding:12px 24px;font-size:11.5px;color:rgba(200,168,75,.45);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+@media(max-width:900px){.aside{display:none}.stats{grid-template-columns:repeat(2,1fr)}.thd,.brow{grid-template-columns:1.2fr 1fr .8fr 130px}.col-inst{display:none}}
+</style>
+</head>
+<body>
+
+<div id="login-page">
+  <div class="lbg"></div><div class="lbg"></div><div class="lgrid"></div>
+  <div class="lbox">
+    <div class="lcard">
+      <div class="luniv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Universitas Tanjungpura
+      </div>
+      <div class="llogo">
+        <div class="lem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="3"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="ltxt">Lab<span>Room</span></div>
+      </div>
+      <div class="lsub">Portal Admin — Sistem Pemesanan Ruangan Lab Terpadu</div>
+      <div class="ldiv"></div>
+      <div class="lf">
+        <label class="llbl">Username</label>
+        <div class="lfw"><input class="linp" id="inp-user" type="text" placeholder="Masukkan username Anda" onkeydown="if(event.key==='Enter')document.getElementById('inp-pw').focus()"/></div>
+      </div>
+      <div class="lf">
+        <label class="llbl">Password</label>
+        <div class="lfw">
+          <input class="linp" id="inp-pw" type="password" placeholder="Masukkan password Anda" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:42px"/>
+          <button class="tpw" onclick="togglePw()" type="button">
+            <svg id="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <svg id="eye-on" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="lerr" id="lerr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="lerr-txt">Username atau password salah.</span>
+      </div>
+      <button class="lbtn" id="lbtn" onclick="doLogin()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Masuk ke Dashboard
+      </button>
+      <div class="lhint">
+        <div class="lhttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Akun Demo</div>
+        <div class="lhrow"><span>Username</span><span class="lhval">admin</span></div>
+        <div class="lhrow" style="margin-top:5px"><span>Password</span><span class="lhval">lab2026</span></div>
+        <div class="lhrow" style="margin-top:5px"><span>Username</span><span class="lhval">superadmin</span></div>
+        <div class="lhrow" style="margin-top:5px"><span>Password</span><span class="lhval">super@123</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="admin-page">
+  <div class="inst-bar">
+    <span style="display:flex;align-items:center;gap:6px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg>
+      Universitas Tanjungpura — Laboratorium Terpadu Fakultas Teknik
+    </span>
+    <span><span class="idot"></span>Panel Admin Aktif</span>
+  </div>
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="lem2"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="3"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <div class="ltxts">
+        <div class="lmain">Lab<span>Room</span></div>
+        <div class="abadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Admin Panel</div>
+      </div>
+    </div>
+    <div class="tr">
+      <div class="uchip">
+        <div class="uav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <span class="uname" id="logged-user">—</span>
+      </div>
+      <button class="bsm danger" onclick="doLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Keluar
+      </button>
+    </div>
+  </div>
+
+  <div class="abody">
+    <div class="aside">
+      <div class="asl"><div class="asll">Menu Utama</div>
+        <div class="asi active" id="nav-dashboard" onclick="navTo('dashboard',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</div>
+      </div>
+      <div class="adiv"></div>
+      <div class="asl"><div class="asll">Reservasi</div>
+        <div class="asi" id="nav-all" onclick="navTo('all',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Semua<span class="ab gold" id="a-total">0</span></div>
+        <div class="asi" id="nav-pending" onclick="navTo('pending',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Menunggu<span class="ab red" id="a-pending">0</span></div>
+        <div class="asi" id="nav-approved" onclick="navTo('approved',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Disetujui<span class="ab green" id="a-approved">0</span></div>
+        <div class="asi" id="nav-rejected" onclick="navTo('rejected',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Ditolak<span class="ab dim" id="a-rejected">0</span></div>
+      </div>
+      <div class="adiv"></div>
+      <div class="asl"><div class="asll">Ruangan</div><div id="aside-rooms"></div></div>
+    </div>
+
+    <div class="main">
+      <div class="psec active" id="sec-dashboard">
+        <div class="ph">
+          <div><div class="pt">Dashboard</div><div class="ps">Ringkasan pemesanan dan kelola reservasi terbaru</div></div>
+          <div class="phact">
+            <button class="bsec" onclick="renderAdmin()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Refresh</button>
+            <button class="bprim" onclick="addDemoBooking()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Demo Booking</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat" onclick="navToFilter('all')"><div class="slbl">Total Pemesanan</div><div class="sval" id="s-total">0</div><div class="ssub">Semua waktu</div><div class="sico" style="--sib:var(--gold-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div></div>
+          <div class="stat" onclick="navToFilter('pending')"><div class="slbl">Menunggu</div><div class="sval amber" id="s-pending">0</div><div class="ssub">Perlu ditinjau</div><div class="sico" style="--sib:var(--amber-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
+          <div class="stat" onclick="navToFilter('approved')"><div class="slbl">Disetujui</div><div class="sval green" id="s-approved">0</div><div class="ssub">Total disetujui</div><div class="sico" style="--sib:var(--green-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+          <div class="stat" onclick="navToFilter('rejected')"><div class="slbl">Ditolak</div><div class="sval red" id="s-rejected">0</div><div class="ssub">Total ditolak</div><div class="sico" style="--sib:var(--red-bg)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div></div>
+        </div>
+        <div style="margin-bottom:24px">
+          <div class="stitle"><div class="stitle-l">Status &amp; Fasilitas Ruangan</div></div>
+          <div id="room-panel-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px"></div>
+        </div>
+        <div>
+          <div class="stitle"><div class="stitle-l">Reservasi Terbaru</div><button class="bsec" onclick="navToFilter('all')" style="font-size:11.5px;padding:4px 12px">Lihat Semua →</button></div>
+          <div class="fbar" id="dash-fbar">
+            <button class="fb active" id="df-all" onclick="setDashFilter('all',this)">Semua <span class="fc" id="df-cnt-all">0</span></button>
+            <button class="fb" id="df-pending" onclick="setDashFilter('pending',this)">⏳ Menunggu <span class="fc" id="df-cnt-pending">0</span></button>
+            <button class="fb" id="df-approved" onclick="setDashFilter('approved',this)">✓ Disetujui <span class="fc" id="df-cnt-approved">0</span></button>
+            <button class="fb" id="df-rejected" onclick="setDashFilter('rejected',this)">✕ Ditolak <span class="fc" id="df-cnt-rejected">0</span></button>
+            <input class="fsc" placeholder="Cari nama, ruangan..." oninput="setDashSearch(this.value)" style="max-width:200px"/>
+          </div>
+          <div class="btbl">
+            <div class="thd"><div>Nama Pemohon</div><div class="col-inst">Instansi / Asal</div><div>Ruangan</div><div class="col-time">Tanggal &amp; Waktu</div><div>Status</div><div>Aksi</div></div>
+            <div id="dash-blist"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="psec" id="sec-list">
+        <div class="ph">
+          <div><div class="pt" id="list-title">Semua Pemesanan</div><div class="ps" id="list-sub">Daftar seluruh pemesanan ruangan</div></div>
+          <button class="bsec" onclick="renderAdmin()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Refresh</button>
+        </div>
+        <div class="fbar">
+          <button class="fb active" id="lf-all" onclick="setListFilter('all',this)">Semua <span class="fc" id="lf-cnt-all">0</span></button>
+          <button class="fb" id="lf-pending" onclick="setListFilter('pending',this)">⏳ Menunggu <span class="fc" id="lf-cnt-pending">0</span></button>
+          <button class="fb" id="lf-approved" onclick="setListFilter('approved',this)">✓ Disetujui <span class="fc" id="lf-cnt-approved">0</span></button>
+          <button class="fb" id="lf-rejected" onclick="setListFilter('rejected',this)">✕ Ditolak <span class="fc" id="lf-cnt-rejected">0</span></button>
+          <input class="fsc" placeholder="Cari nama, ruangan, instansi..." oninput="setListSearch(this.value)"/>
+        </div>
+        <div class="btbl">
+          <div class="thd"><div>Nama Pemohon</div><div class="col-inst">Instansi / Asal</div><div>Ruangan</div><div class="col-time">Tanggal &amp; Waktu</div><div>Status</div><div>Aksi</div></div>
+          <div id="list-blist"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="afoot">
+    <span>© 2026 <strong style="color:rgba(200,168,75,.65)">LabRoom Admin</strong> — Universitas Tanjungpura</span>
+    <span>Sistem Informasi Pemesanan Ruangan Lab Terpadu v2.0</span>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="ov" id="room-mgmt-overlay">
+  <div class="modal" style="max-width:520px">
+    <div class="mhd"><div class="mttl" id="rmgmt-title">Kelola Ruangan</div><div class="msub" id="rmgmt-sub">Edit fasilitas dan status</div></div>
+    <div class="mf"><div class="ml">Kapasitas (Orang)</div><input id="rmgmt-cap" type="number" min="1" max="200" class="fci"/></div>
+    <div class="mf"><div class="ml">Fasilitas</div><textarea id="rmgmt-fasilitas" rows="3" placeholder="contoh: 30 PC, Proyektor, AC, WiFi" class="fci" style="resize:vertical"></textarea></div>
+    <div class="mf"><div class="ml">Status Ruangan</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="stp available" onclick="pickStatus('available')">✔ Tersedia</button>
+        <button class="stp maintenance" onclick="pickStatus('maintenance')">🔧 Maintenance</button>
+        <button class="stp closed" onclick="pickStatus('closed')">🚫 Ditutup</button>
+      </div>
+    </div>
+    <div class="mf" id="rmgmt-until-wrap" style="display:none"><div class="ml">Sampai Tanggal</div><input id="rmgmt-until" type="date" class="fci"/><div style="font-size:11.5px;color:var(--text3);margin-top:5px">Kosongkan = tidak ada batas waktu</div></div>
+    <div class="mac"><button class="mb svc" onclick="saveRoomMgmt()">Simpan Perubahan</button><button class="mb cnc" onclick="closeRoomMgmt()">Batal</button></div>
+  </div>
+</div>
+
+<div class="ov" id="room-cal-overlay">
+  <div class="modal" style="max-width:640px">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
+      <div><div class="mttl" id="rc-title">Jadwal Ruangan</div><div class="msub" id="rc-sub">Klik tanggal untuk detail</div></div>
+      <button class="mb cnc" onclick="closeRoomCalendar()" style="flex:none;padding:7px 16px;font-size:12px;min-width:auto">✕ Tutup</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 14px;background:var(--cream);border-radius:10px">
+      <button onclick="rcChangeMonth(-1)" style="background:var(--white);border:1.5px solid var(--border2);border-radius:8px;color:var(--text2);cursor:pointer;padding:5px 14px;font-size:14px;font-family:var(--font);transition:all .15s" onmouseover="this.style.background='var(--navy)';this.style.color='var(--gold3)'" onmouseout="this.style.background='var(--white)';this.style.color='var(--text2)'">&#8249;</button>
+      <div id="rc-month-label" style="font-size:15px;font-weight:700;color:var(--navy);font-family:var(--display)"></div>
+      <button onclick="rcChangeMonth(1)" style="background:var(--white);border:1.5px solid var(--border2);border-radius:8px;color:var(--text2);cursor:pointer;padding:5px 14px;font-size:14px;font-family:var(--font);transition:all .15s" onmouseover="this.style.background='var(--navy)';this.style.color='var(--gold3)'" onmouseout="this.style.background='var(--white)';this.style.color='var(--text2)'">&#8250;</button>
+    </div>
+    <div id="rc-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px"></div>
+    <div style="display:flex;gap:14px;font-size:11.5px;color:var(--text3);margin-bottom:14px">
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>Tersedia</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>Ada reservasi</span>
+    </div>
+    <div id="rc-day-detail" style="display:none">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px" id="rc-day-title"></div>
+      <div id="rc-day-list"></div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="edit-overlay">
+  <div class="modal" style="max-width:460px">
+    <div class="mhd"><div class="mttl">Edit Reservasi</div><div class="msub" id="edit-sub">—</div></div>
+    <div class="mf"><div class="ml">Nama Pemohon</div><input class="fci" id="edit-nama" type="text"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+      <div><div class="ml">Tanggal</div><input class="fci" id="edit-tanggal" type="date"/></div>
+      <div><div class="ml">Jam Mulai</div><input class="fci" id="edit-mulai" type="time"/></div>
+      <div><div class="ml">Jam Selesai</div><input class="fci" id="edit-selesai" type="time"/></div>
+    </div>
+    <div class="mf"><div class="ml">Keperluan</div><input class="fci" id="edit-kep" type="text"/></div>
+    <div class="mac"><button class="mb svc" onclick="saveEdit()">Simpan</button><button class="mb cnc" onclick="closeEdit()">Batal</button></div>
+  </div>
+</div>
+
+<div class="ov" id="overlay">
+  <div class="modal">
+    <div class="mhd"><div class="mttl" id="m-title">Detail Pemesanan</div><div class="msub" id="m-sub">—</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="mf"><div class="ml">Nama Lengkap</div><div class="mv" id="m-nama">—</div></div>
+      <div class="mf"><div class="ml">Instansi / Fakultas</div><div class="mv" id="m-inst">—</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="mf"><div class="ml">Kontak</div><div class="mv" id="m-kontak">—</div></div>
+      <div class="mf"><div class="ml">Ruangan</div><div class="mv" id="m-room">—</div></div>
+    </div>
+    <div class="mf"><div class="ml">Tanggal &amp; Waktu</div><div class="mv" id="m-time">—</div></div>
+    <div class="mf"><div class="ml">Keperluan</div><div class="mv" id="m-kep">—</div></div>
+    <div class="mtl"><div class="mtll">Peta jadwal ruangan pada hari tersebut:</div><div class="mtlb" id="m-tl-bar"></div><div class="mtlt"><span>07:00</span><span>09:00</span><span>11:00</span><span>13:00</span><span>15:00</span><span>17:00</span></div></div>
+    <div class="mwarn" id="m-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="m-warn-text">—</span></div>
+    <div class="mac"><button class="mb apc" id="m-approve">✔ Setujui</button><button class="mb rjc" id="m-reject">✕ Tolak</button><button class="mb cnc" onclick="closeModal()">Tutup</button></div>
+  </div>
+</div>
+
+<script>
+const USERS=[{id:1,username:'admin',password:'lab2026',nama:'Administrator',role:'admin'},{id:2,username:'superadmin',password:'super@123',nama:'Super Admin',role:'superadmin'},{id:3,username:'labmanager',password:'mgr2026',nama:'Manajer Lab',role:'manager'}];
+const SK='labroom_session',BK='labroom_bookings',RK='labroom_rooms';
+const DR=[{name:'Lab Komputer A',cap:30,fasilitas:'30 PC, Proyektor, AC, WiFi, Whiteboard',status:'available',closedUntil:''},{name:'Lab Komputer B',cap:30,fasilitas:'30 PC, Proyektor, AC, WiFi, Printer',status:'available',closedUntil:''},{name:'Lab Jaringan',cap:24,fasilitas:'24 PC, Rack Server, Switch, Router, Kabel UTP',status:'available',closedUntil:''},{name:'Lab Elektronika',cap:20,fasilitas:'Osiloskop, PCB, Solder, Power Supply, Multimeter',status:'available',closedUntil:''},{name:'Ruang Seminar',cap:60,fasilitas:'Meja Bundar, Proyektor, Sound System, AC, Papan Tulis',status:'available',closedUntil:''},{name:'Ruang Rapat',cap:15,fasilitas:'Meja Rapat, Proyektor, TV, AC, Whiteboard',status:'available',closedUntil:''}];
+const lr=()=>{try{return JSON.parse(localStorage.getItem(RK)||'null')||JSON.parse(JSON.stringify(DR));}catch(e){return JSON.parse(JSON.stringify(DR));}};
+const sr=l=>localStorage.setItem(RK,JSON.stringify(l));
+const gs=()=>{try{return JSON.parse(sessionStorage.getItem(SK)||'null');}catch(e){return null;}};
+const ss=u=>sessionStorage.setItem(SK,JSON.stringify(u));
+const cs=()=>sessionStorage.removeItem(SK);
+const lb=()=>{try{return JSON.parse(localStorage.getItem(BK)||'[]');}catch(e){return[];}};
+const sb=l=>localStorage.setItem(BK,JSON.stringify(l));
+const tm=t=>{const[h,m]=t.split(':').map(Number);return h*60+m;};
+const gc=(ruangan,tanggal,mulai,selesai,excId=null)=>{const s=tm(mulai),e=tm(selesai);return lb().filter(b=>{if(b.id===excId)return false;if(b.ruangan!==ruangan||b.tanggal!==tanggal||b.status==='rejected')return false;return s<tm(b.jamSelesai)&&e>tm(b.jamMulai);});};
+
+function togglePw(){const i=document.getElementById('inp-pw');const a=document.getElementById('eye-off');const b=document.getElementById('eye-on');if(i.type==='password'){i.type='text';a.style.display='none';b.style.display='';}else{i.type='password';b.style.display='none';a.style.display='';}}
+function doLogin(){
+  const u=document.getElementById('inp-user').value.trim(),p=document.getElementById('inp-pw').value;
+  const err=document.getElementById('lerr'),btn=document.getElementById('lbtn');
+  err.classList.remove('show');btn.disabled=true;
+  btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:spin .7s linear infinite;width:16px;height:16px"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Memverifikasi...';
+  setTimeout(()=>{
+    const f=USERS.find(x=>x.username===u&&x.password===p);
+    if(f){ss(f);document.getElementById('login-page').classList.add('hidden');document.getElementById('admin-page').classList.add('active');document.getElementById('logged-user').textContent=f.nama;renderAdmin();}
+    else{document.getElementById('lerr-txt').textContent='Username atau password salah. Coba lagi.';err.classList.add('show');document.getElementById('inp-user').classList.add('err');document.getElementById('inp-pw').classList.add('err');}
+    btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Masuk ke Dashboard';
+  },900);
+}
+function doLogout(){cs();document.getElementById('admin-page').classList.remove('active');document.getElementById('login-page').classList.remove('hidden');document.getElementById('inp-user').value='';document.getElementById('inp-pw').value='';document.getElementById('inp-user').classList.remove('err');document.getElementById('inp-pw').classList.remove('err');document.getElementById('lerr').classList.remove('show');showToast('Berhasil keluar dari sistem.','success');}
+
+let cur='dashboard',clf='all',cdf='all',dsq='',lsq='';
+function navTo(sec,btn){
+  document.querySelectorAll('.asi').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cur=sec;
+  document.querySelectorAll('.psec').forEach(s=>s.classList.remove('active'));
+  if(sec==='dashboard'){document.getElementById('sec-dashboard').classList.add('active');}
+  else{
+    document.getElementById('sec-list').classList.add('active');
+    clf=sec==='all'?'all':sec==='pending'?'pending':sec==='approved'?'approved':'rejected';
+    const T={all:'Semua Pemesanan',pending:'Menunggu Konfirmasi',approved:'Pemesanan Disetujui',rejected:'Pemesanan Ditolak'};
+    const S={all:'Daftar seluruh pemesanan ruangan',pending:'Reservasi menunggu keputusan admin',approved:'Reservasi yang telah disetujui',rejected:'Reservasi yang telah ditolak'};
+    document.getElementById('list-title').textContent=T[sec]||'Semua Pemesanan';document.getElementById('list-sub').textContent=S[sec]||'';
+    ['all','pending','approved','rejected'].forEach(f=>{const b=document.getElementById('lf-'+f);if(b)b.className='fb'+(f===clf?' active':'');});
+    renderListTable();
+  }
+}
+function navToFilter(f){navTo(f==='all'?'all':f,document.getElementById('nav-'+(f==='all'?'all':f)));}
+function renderAdmin(){
+  const list=lb();const p=list.filter(b=>b.status==='pending').length;const ap=list.filter(b=>b.status==='approved').length;const re=list.filter(b=>b.status==='rejected').length;
+  ['s-total','a-total'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=list.length;});
+  ['s-pending','a-pending'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=p;});
+  ['s-approved','a-approved'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=ap;});
+  ['s-rejected','a-rejected'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=re;});
+  document.getElementById('df-cnt-all').textContent=list.length;document.getElementById('df-cnt-pending').textContent=p;document.getElementById('df-cnt-approved').textContent=ap;document.getElementById('df-cnt-rejected').textContent=re;
+  document.getElementById('lf-cnt-all').textContent=list.length;document.getElementById('lf-cnt-pending').textContent=p;document.getElementById('lf-cnt-approved').textContent=ap;document.getElementById('lf-cnt-rejected').textContent=re;
+  renderRoomsPanel();renderDashTable();renderListTable();
+}
+function buildRows(data){
+  if(!data.length)return'<div class="es"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>Tidak ada data pemesanan</p></div>';
+  const fd=d=>{const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;};
+  return data.map(b=>{
+    const tc=b.status==='pending'?'pending':b.status==='approved'?'approved':'rejected';
+    const tl=b.status==='pending'?'Menunggu':b.status==='approved'?'Disetujui':'Ditolak';
+    const cf=b.status==='pending'?gc(b.ruangan,b.tanggal,b.jamMulai,b.jamSelesai,b.id):[];
+    const cb=cf.length?'<span class="cbg">⚠ Bentrok</span>':'';
+    const ac=b.status==='pending'?`<button class="ab2 vw" onclick="openModal(${b.id})">Tinjau</button><button class="ab2 ar" onclick="qd(${b.id},'rejected')">Tolak</button>`:`<button class="ab2 vw" onclick="openModal(${b.id})">Detail</button>`;
+    return`<div class="brow"><div class="c"><div class="cn">${b.nama}${cb}</div><div class="cs">${b.kontak}</div></div><div class="c col-inst" style="font-size:12.5px;color:var(--text2)">${b.instansi||'—'}</div><div class="c" style="font-size:12.5px">${b.ruangan}</div><div class="c col-time">${fd(b.tanggal)}<br><span style="color:var(--text3);font-size:11.5px">${b.jamMulai}–${b.jamSelesai}</span></div><div class="c"><span class="tag ${tc}"><span class="tdot"></span>${tl}</span></div><div class="acts">${ac}</div></div>`;
+  }).join('');
+}
+function renderDashTable(){let d=lb();if(cdf!=='all')d=d.filter(b=>b.status===cdf);if(dsq)d=d.filter(b=>b.nama.toLowerCase().includes(dsq)||b.ruangan.toLowerCase().includes(dsq)||(b.instansi||'').toLowerCase().includes(dsq));d.sort((a,b)=>b.id-a.id);document.getElementById('dash-blist').innerHTML=buildRows(d.slice(0,10));}
+function setDashFilter(f,btn){cdf=f;document.querySelectorAll('#dash-fbar .fb').forEach(b=>b.className='fb');const m={all:'fb active',pending:'fb active-amber',approved:'fb active-green',rejected:'fb active-red'};btn.className=m[f]||'fb active';renderDashTable();}
+function setDashSearch(q){dsq=q.toLowerCase();renderDashTable();}
+function renderListTable(){let d=lb();if(clf!=='all')d=d.filter(b=>b.status===clf);if(lsq)d=d.filter(b=>b.nama.toLowerCase().includes(lsq)||b.ruangan.toLowerCase().includes(lsq)||(b.instansi||'').toLowerCase().includes(lsq));d.sort((a,b)=>b.id-a.id);document.getElementById('list-blist').innerHTML=buildRows(d);}
+function setListFilter(f,btn){clf=f;['all','pending','approved','rejected'].forEach(x=>{const b=document.getElementById('lf-'+x);if(b)b.className='fb';});const m={all:'fb active',pending:'fb active-amber',approved:'fb active-green',rejected:'fb active-red'};btn.className=m[f]||'fb active';renderListTable();}
+function setListSearch(q){lsq=q.toLowerCase();renderListTable();}
+
+let rmN='',rmS='available';
+function openRoomMgmt(name){const rooms=lr();const r=rooms.find(x=>x.name===name);if(!r)return;rmN=name;rmS=r.status||'available';document.getElementById('rmgmt-title').textContent='Kelola: '+name;document.getElementById('rmgmt-sub').textContent='Edit kapasitas, fasilitas dan status ruangan';document.getElementById('rmgmt-cap').value=r.cap||'';document.getElementById('rmgmt-fasilitas').value=r.fasilitas||'';document.getElementById('rmgmt-until').value=r.closedUntil||'';pickStatus(rmS,false);document.getElementById('room-mgmt-overlay').classList.add('show');}
+function closeRoomMgmt(){document.getElementById('room-mgmt-overlay').classList.remove('show');}
+document.getElementById('room-mgmt-overlay').addEventListener('click',function(e){if(e.target===this)closeRoomMgmt();});
+function pickStatus(st){rmS=st;document.querySelectorAll('.stp').forEach(b=>b.classList.remove('active'));const b=document.querySelector('.stp.'+st);if(b)b.classList.add('active');document.getElementById('rmgmt-until-wrap').style.display=(st==='maintenance'||st==='closed')?'block':'none';}
+function saveRoomMgmt(){const rooms=lr();const r=rooms.find(x=>x.name===rmN);if(!r){closeRoomMgmt();return;}r.cap=parseInt(document.getElementById('rmgmt-cap').value)||r.cap;r.fasilitas=document.getElementById('rmgmt-fasilitas').value.trim();r.status=rmS;r.closedUntil=rmS==='available'?'':document.getElementById('rmgmt-until').value;sr(rooms);closeRoomMgmt();renderAdmin();showToast('Data ruangan berhasil disimpan!','success');}
+
+function autoExpire(){const rooms=lr();const today=new Date().toISOString().split('T')[0];let ch=false;rooms.forEach(r=>{if((r.status==='maintenance'||r.status==='closed')&&r.closedUntil&&r.closedUntil<today){r.status='available';r.closedUntil='';ch=true;}});if(ch)sr(rooms);return rooms;}
+function renderRoomsPanel(){
+  const rooms=autoExpire();
+  const as=document.getElementById('aside-rooms');
+  if(as)as.innerHTML=rooms.map(r=>{const sc=r.status==='available'?'var(--green)':r.status==='maintenance'?'var(--amber)':'var(--red)';return`<div class="asi" onclick="openRoomCalendar('${r.name}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;flex-shrink:0"><rect x="2" y="3" width="20" height="14" rx="3"/><path d="M8 21h8M12 17v4"/></svg><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${r.name}</span><span style="width:7px;height:7px;border-radius:50%;background:${sc};flex-shrink:0"></span><button onclick="event.stopPropagation();openRoomMgmt('${r.name}')" style="background:none;border:none;cursor:pointer;color:rgba(200,168,75,.4);padding:0 0 0 4px;font-size:14px;transition:color .15s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(200,168,75,.4)'">⚙</button></div>`;}).join('');
+  const pl=document.getElementById('room-panel-list');if(!pl)return;
+  const stL={available:'Tersedia',maintenance:'Maintenance',closed:'Ditutup'};
+  pl.innerHTML=rooms.map(r=>{const ux=r.closedUntil?' s/d '+r.closedUntil.split('-').reverse().join('/'):'';return`<div class="rsc"><div><div class="rsn">${r.name}</div><div class="rsd">Kapasitas: ${r.cap} orang</div>${r.fasilitas?`<div class="rsd" style="margin-top:3px;font-size:11px">${r.fasilitas}</div>`:''}</div><div style="display:flex;align-items:center;gap:8px;flex-shrink:0"><span class="rstag ${r.status||'available'}">${stL[r.status]||r.status}${ux}</span><button class="ber" onclick="openRoomMgmt('${r.name}')">Edit</button></div></div>`;}).join('');
+  if(typeof rcRoom!=='undefined'&&rcRoom)renderRoomCalendar();
+}
+let rcRoom='',rcY=0,rcM=0,rcSD='';
+function openRoomCalendar(room){rcRoom=room;const n=new Date();rcY=n.getFullYear();rcM=n.getMonth();rcSD='';document.getElementById('rc-title').textContent='Jadwal: '+room;document.getElementById('rc-sub').textContent='Klik tanggal untuk melihat detail reservasi';renderRoomCalendar();document.getElementById('room-cal-overlay').classList.add('show');}
+function closeRoomCalendar(){document.getElementById('room-cal-overlay').classList.remove('show');document.getElementById('rc-day-detail').style.display='none';}
+document.getElementById('room-cal-overlay').addEventListener('click',function(e){if(e.target===this)closeRoomCalendar();});
+function rcChangeMonth(d){rcM+=d;if(rcM>11){rcM=0;rcY++;}if(rcM<0){rcM=11;rcY--;}renderRoomCalendar();}
+function renderRoomCalendar(){
+  const MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  document.getElementById('rc-month-label').textContent=MN[rcM]+' '+rcY;
+  const days=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const list=lb().filter(b=>b.ruangan===rcRoom&&b.status!=='rejected');
+  const today=new Date().toISOString().split('T')[0];
+  let h=days.map(d=>`<div class="rch">${d}</div>`).join('');
+  const fd=new Date(rcY,rcM,1).getDay();const dim=new Date(rcY,rcM+1,0).getDate();
+  for(let i=0;i<fd;i++)h+='<div class="rcd empty"></div>';
+  for(let d=1;d<=dim;d++){const ds=`${rcY}-${String(rcM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const bks=list.filter(b=>b.tanggal===ds);let cls='rcd';if(bks.length)cls+=' hasbk';if(ds===today)cls+=' today';if(ds===rcSD)cls+=' sel';const dots=bks.length?`<div class="drow">${bks.slice(0,4).map(()=>'<span class="dd"></span>').join('')}</div>`:'';h+=`<div class="${cls}" onclick="rcSel('${ds}')"><div class="rcdn">${d}</div>${dots}</div>`;}
+  document.getElementById('rc-cal-grid').innerHTML=h;if(rcSD)renderRcDay(rcSD);
+}
+function rcSel(ds){rcSD=ds;renderRoomCalendar();renderRcDay(ds);}
+function renderRcDay(ds){
+  const lbl=new Date(ds+'T00:00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('rc-day-title').textContent=lbl;
+  const list=lb().filter(b=>b.ruangan===rcRoom&&b.tanggal===ds&&b.status!=='rejected');
+  const det=document.getElementById('rc-day-detail');det.style.display='block';
+  if(!list.length){document.getElementById('rc-day-list').innerHTML='<div style="font-size:12.5px;color:var(--text3);padding:10px;background:var(--cream);border-radius:8px;text-align:center">Tidak ada reservasi pada hari ini.</div>';return;}
+  list.sort((a,b)=>tm(a.jamMulai)-tm(b.jamMulai));
+  document.getElementById('rc-day-list').innerHTML=list.map(b=>{const tc=b.status==='approved'?'approved':b.status==='pending'?'pending':'rejected';const tl=b.status==='approved'?'Disetujui':b.status==='pending'?'Menunggu':'Ditolak';return`<div class="rci"><div><div class="rcii"><strong>${b.nama}</strong> · ${b.instansi||'—'} <span class="tsm ${tc}">${tl}</span></div><div class="rcit">🕐 ${b.jamMulai}–${b.jamSelesai} | ${b.keperluan}</div></div><div class="rcia"><button class="rcb ed" onclick="openEdit(${b.id})">Edit</button><button class="rcb dl" onclick="delBk(${b.id})">Hapus</button></div></div>`;}).join('');
+}
+function delBk(id){if(!confirm('Hapus reservasi ini?'))return;sb(lb().filter(x=>x.id!==id));renderAdmin();if(rcRoom)renderRcDay(rcSD);showToast('Reservasi dihapus.','error');}
+let eid=null;
+function openEdit(id){const b=lb().find(x=>x.id===id);if(!b)return;eid=id;document.getElementById('edit-sub').textContent=b.ruangan;document.getElementById('edit-nama').value=b.nama;document.getElementById('edit-tanggal').value=b.tanggal;document.getElementById('edit-mulai').value=b.jamMulai;document.getElementById('edit-selesai').value=b.jamSelesai;document.getElementById('edit-kep').value=b.keperluan;document.getElementById('edit-overlay').classList.add('show');}
+function closeEdit(){document.getElementById('edit-overlay').classList.remove('show');eid=null;}
+document.getElementById('edit-overlay').addEventListener('click',function(e){if(e.target===this)closeEdit();});
+function saveEdit(){const list=lb();const b=list.find(x=>x.id===eid);if(!b){closeEdit();return;}const nm=document.getElementById('edit-nama').value.trim();const tg=document.getElementById('edit-tanggal').value;const ml=document.getElementById('edit-mulai').value;const sl=document.getElementById('edit-selesai').value;const kp=document.getElementById('edit-kep').value.trim();if(!nm||!tg||!ml||!sl||!kp){showToast('Mohon lengkapi semua data.','warn');return;}if(tm(ml)>=tm(sl)){showToast('Jam mulai harus sebelum jam selesai.','warn');return;}const cf=gc(b.ruangan,tg,ml,sl,eid);if(cf.length){showToast('Jadwal bentrok dengan reservasi lain!','error');return;}b.nama=nm;b.tanggal=tg;b.jamMulai=ml;b.jamSelesai=sl;b.keperluan=kp;sb(list);closeEdit();renderAdmin();if(rcRoom&&rcSD)renderRcDay(rcSD);showToast('Reservasi berhasil diperbarui!','success');}
+
+const TLS=7*60,TLE=17*60,TLD=TLE-TLS;
+const pct=m=>Math.max(0,Math.min(100,((m-TLS)/TLD)*100));
+let aid=null;
+function openModal(id){
+  const list=lb();const b=list.find(x=>x.id===id);if(!b)return;aid=id;
+  const fd=d=>{const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;};
+  const df=d=>new Date(d+'T00:00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('m-title').textContent='Pemesanan: '+b.ruangan;
+  document.getElementById('m-sub').textContent='Diajukan oleh '+b.nama+' · '+(b.instansi||'—');
+  document.getElementById('m-nama').textContent=b.nama;document.getElementById('m-inst').textContent=b.instansi||'—';
+  document.getElementById('m-kontak').textContent=b.kontak;document.getElementById('m-room').textContent=b.ruangan;
+  document.getElementById('m-time').textContent=df(b.tanggal)+', '+b.jamMulai+' – '+b.jamSelesai;document.getElementById('m-kep').textContent=b.keperluan;
+  const oth=list.filter(x=>x.ruangan===b.ruangan&&x.tanggal===b.tanggal&&x.id!==b.id&&x.status!=='rejected');
+  let tl=oth.map(x=>{const s=pct(tm(x.jamMulai)),e=pct(tm(x.jamSelesai));return`<div class="mtls bkd" style="left:${s}%;width:${Math.max(e-s,1)}%">${x.jamMulai}–${x.jamSelesai}</div>`;}).join('');
+  const cs=pct(tm(b.jamMulai)),ce=pct(tm(b.jamSelesai));
+  tl+=`<div class="mtls cur" style="left:${cs}%;width:${Math.max(ce-cs,1)}%">${b.jamMulai}–${b.jamSelesai}</div>`;
+  document.getElementById('m-tl-bar').innerHTML=tl;
+  const cf=gc(b.ruangan,b.tanggal,b.jamMulai,b.jamSelesai,b.id);
+  const w=document.getElementById('m-warn');
+  if(cf.length){w.classList.add('show');document.getElementById('m-warn-text').innerHTML='⚠️ Bentrok dengan: '+cf.map(c=>`<strong>${c.nama}</strong> (${c.jamMulai}–${c.jamSelesai})`).join(', ')+'.';}
+  else w.classList.remove('show');
+  const ap=document.getElementById('m-approve');const rj=document.getElementById('m-reject');
+  if(b.status==='pending'){ap.style.display='';rj.style.display='';ap.onclick=()=>decide(id,'approved');rj.onclick=()=>decide(id,'rejected');}
+  else{ap.style.display='none';rj.style.display='none';}
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('show');aid=null;}
+function decide(id,st){const list=lb();const b=list.find(x=>x.id===id);if(!b)return;b.status=st;b.decidedAt=new Date().toISOString();b.decidedBy=gs()?.username||'admin';sb(list);closeModal();renderAdmin();showToast(st==='approved'?'Pemesanan berhasil disetujui!':'Pemesanan ditolak.',st==='approved'?'success':'error');}
+function qd(id,st){const list=lb();const b=list.find(x=>x.id===id);if(!b)return;b.status=st;b.decidedAt=new Date().toISOString();b.decidedBy=gs()?.username||'admin';sb(list);renderAdmin();showToast('Pemesanan ditolak.','error');}
+document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+const DN=['Ahmad Fauzi','Lestari Putri','Roni Wijaya','Hani Safitri','Dodi Kurnia'];
+const DI=['Teknik Sipil — Umum','Manajemen — Untan','Akuntansi — Umum','Hukum — Untan','Kedokteran — Umum'];
+const DRN=['Lab Komputer A','Lab Jaringan','Lab Elektronika','Ruang Seminar','Ruang Rapat'];
+const TM=[['08:00','10:00'],['10:00','12:00'],['13:00','15:00'],['15:00','17:00']];
+let di=0;
+function addDemoBooking(){const i=di%5;const t=TM[di%4];di++;const list=lb();const b={id:Date.now(),createdAt:new Date().toISOString(),nama:DN[i],instansi:DI[i],kontak:'08'+Math.floor(Math.random()*9e9+1e9),ruangan:DRN[i],tanggal:'2026-04-15',jamMulai:t[0],jamSelesai:t[1],keperluan:'Kegiatan akademik (data demo)',status:'pending'};list.push(b);sb(list);renderAdmin();showToast('Booking demo dari '+b.nama+' berhasil masuk!','success');}
+
+function showToast(msg,type='success'){const ic={success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'};const t=document.createElement('div');t.className='toast '+type;t.innerHTML=(ic[type]||ic.success)+msg;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(8px)';t.style.transition='all .3s';setTimeout(()=>t.remove(),300);},3200);}
+
+const sty=document.createElement('style');sty.textContent='@keyframes spin{to{transform:rotate(360deg)}}';document.head.appendChild(sty);
+(function(){const s=gs();if(s){document.getElementById('login-page').classList.add('hidden');document.getElementById('admin-page').classList.add('active');document.getElementById('logged-user').textContent=s.nama;renderAdmin();}})();
+</script>
+</body>
+</html>
